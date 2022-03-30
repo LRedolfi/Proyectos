@@ -16,31 +16,31 @@ ythonpay
 >>> pig_latin('School')
 choolSay"""
 def pig_latín(frase): #Defino la función
-    frase_convertida=""
-    largo_frase=len(frase)
-    pos_ult_espacio=0
-    primer_espacio=0
-    for posición in range(0,largo_frase):
-        if frase[posición]==" ":
-            palabra=frase[pos_ult_espacio+primer_espacio:posición]
-            primer_espacio=1
-            pos_ult_espacio=posición
+    frase_convertida="" #Defino una cadena vacía para armar la frase final
+    largo_frase=len(frase) #Obtengo el largo de la frase
+    pos_ult_espacio=0 #Posición del ultimo espacio encontrado
+    aux_paso_primer_espacio=0 #Variable auxiliar de paso por primer espacio
+    for posición in range(0,largo_frase): #Recorro la frase posición por posición
+        if frase[posición]==" ": #Al encontrar un espacio
+            palabra=frase[pos_ult_espacio+aux_paso_primer_espacio:posición] #Tomo la palabra como substring desde la posición del ultimo espacio encontrado hasta la posición actual
+            aux_paso_primer_espacio=1 #Como pase por el primer espacio, cambio el valor de la auxiliar
+            pos_ult_espacio=posición #Actualizo la posición del ultimo espacio encontrado
             nueva_palabra="" #Defino un string vacío
             primer_carácter=palabra[0].lower() #Defino el primer carácter
             if primer_carácter in "aeiou": #Si es una vocal
                 nueva_palabra=palabra+"way" #Agrego way al final
             else:
                 nueva_palabra=palabra[1:]+primer_carácter+"ay" #Si no tomo la palabra sin el primer carácter, lo sumo al final y agrego ay
-            frase_convertida=frase_convertida+nueva_palabra+" "
-        elif posición==largo_frase-1:
-            palabra=frase[pos_ult_espacio+1:]
+            frase_convertida=frase_convertida+nueva_palabra+" " #Concateno los resultados
+        elif posición==largo_frase-1: #Si llego a la ultima posición de la frase
+            palabra=frase[pos_ult_espacio+aux_paso_primer_espacio:] #Tomo la palabra como substring desde la posición del ultimo espacio encontrado hasta la posición final
             nueva_palabra_final="" #Defino un string vacío
             primer_carácter=palabra[0].lower() #Defino el primer carácter
             if primer_carácter in "aeiou": #Si es una vocal
                 nueva_palabra_final=palabra+"way" #Agrego way al final
             else:
                 nueva_palabra_final=palabra[1:]+primer_carácter+"ay" #Si no tomo la palabra sin el primer carácter, lo sumo al final y agrego ay
-            frase_convertida=frase_convertida+nueva_palabra_final
+            frase_convertida=frase_convertida+nueva_palabra_final #Concateno los resultados
     return frase_convertida #Retorno la nueva palabra
 
-print(pig_latín("eat fone car air"))
+print(pig_latín("eat car sun air bee"))
