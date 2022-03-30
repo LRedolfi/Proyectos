@@ -43,4 +43,6 @@ def pig_latín(frase): #Defino la función
             frase_convertida=frase_convertida+nueva_palabra_final #Concateno los resultados
     return frase_convertida #Retorno la nueva palabra
 
-print(pig_latín("eat car sun air bee"))
+
+entrada=input("Ingrese la/s palabra/s: ")
+print(pig_latín(entrada))
