@@ -15,13 +15,32 @@ Ejemplo.
 ythonpay
 >>> pig_latin('School')
 choolSay"""
-def pig_latín(palabra): #Defino la función
-    nueva_palabra="" #Defino un string vacío
-    primer_carácter=palabra[0].lower() #Defino el primer carácter
-    if primer_carácter in "aeiou": #Si es una vocal
-        nueva_palabra=palabra+"way" #Agrego way al final
-    else:
-        nueva_palabra=palabra[1:]+primer_carácter+"ay" #Si no tomo la palabra sin el primer carácter, lo sumo al final y agrego ay
-    return nueva_palabra #Retorno la nueva palabra
+def pig_latín(frase): #Defino la función
+    frase_convertida=""
+    largo_frase=len(frase)
+    pos_ult_espacio=0
+    primer_espacio=0
+    for posición in range(0,largo_frase):
+        if frase[posición]==" ":
+            palabra=frase[pos_ult_espacio+primer_espacio:posición]
+            primer_espacio=1
+            pos_ult_espacio=posición
+            nueva_palabra="" #Defino un string vacío
+            primer_carácter=palabra[0].lower() #Defino el primer carácter
+            if primer_carácter in "aeiou": #Si es una vocal
+                nueva_palabra=palabra+"way" #Agrego way al final
+            else:
+                nueva_palabra=palabra[1:]+primer_carácter+"ay" #Si no tomo la palabra sin el primer carácter, lo sumo al final y agrego ay
+            frase_convertida=frase_convertida+nueva_palabra+" "
+        elif posición==largo_frase-1:
+            palabra=frase[pos_ult_espacio+1:]
+            nueva_palabra_final="" #Defino un string vacío
+            primer_carácter=palabra[0].lower() #Defino el primer carácter
+            if primer_carácter in "aeiou": #Si es una vocal
+                nueva_palabra_final=palabra+"way" #Agrego way al final
+            else:
+                nueva_palabra_final=palabra[1:]+primer_carácter+"ay" #Si no tomo la palabra sin el primer carácter, lo sumo al final y agrego ay
+            frase_convertida=frase_convertida+nueva_palabra_final
+    return frase_convertida #Retorno la nueva palabra
 
-print(pig_latín("eat"))
+print(pig_latín("eat fone car air"))
