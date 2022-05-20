@@ -13,4 +13,4 @@ for carácter in mensaje: #Iteración sobre cada carácter del mensaje
         carácter='@' #Si esta, se reemplaza ese carácter por @
     nuevo_mensaje=nuevo_mensaje+carácter #Se concatena para el armado del nuevo mensaje
 
-print(nuevo_mensaje) #Impresion en consola del mensaje final
+print(nuevo_mensaje) #Impresión en consola del mensaje final
