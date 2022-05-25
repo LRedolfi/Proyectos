@@ -7,24 +7,24 @@ class Jugador(pygame.sprite.Sprite): #Defino la clase, hija de Sprite
 
         self.imagen=pygame.Surface(tamaño_jugador) #Creo la imagen del jugador
         self.imagen.fill(color_jugador) #Coloreo el jugador
-        self.rectángulo=self.imagen.get_rect() #Obtengo el rectángulo del jugador
-        self.rectángulo.x=posición_x #Seteo las posiciones iniciales del jugador
-        self.rectángulo.y=posición_y
+        self.rect=self.imagen.get_rect() #Obtengo el rect del jugador
+        self.rect.x=posición_x #Seteo las posiciones iniciales del jugador
+        self.rect.y=posición_y
 
         self.velocidad=2 #Defino la velocidad de movimiento del jugador
     
     def dibujar(self, superficie): #Defino el método dibujar, que recibe donde se dibuja
-        superficie.blit(self.imagen,self.rectángulo) #Dibujo el jugador
+        superficie.blit(self.imagen,self.rect) #Dibujo el jugador
 
     #Defino los métodos para mover el jugador
     def izquierda(self): 
-        self.rectángulo.x-=self.velocidad
+        self.rect.x-=self.velocidad
 
     def derecha(self):
-        self.rectángulo.x+=self.velocidad
+        self.rect.x+=self.velocidad
 
     def arriba(self):
-        self.rectángulo.y-=self.velocidad
+        self.rect.y-=self.velocidad
 
     def abajo(self):
-        self.rectángulo.y+=self.velocidad
+        self.rect.y+=self.velocidad

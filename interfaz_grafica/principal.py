@@ -10,10 +10,12 @@ pygame.init() # Inicio pygame
 ventana = pygame.display.set_mode((ancho_ventana,alto_ventana)) #Creo la ventana
 pygame.display.set_caption("Ventana") #Titulo de la ventana
 
-jugador_1=Jugador(ancho_ventana//2-ancho_jugador//2,alto_ventana//2-alto_jugador//2) #Creo el jugador
-enemigos=[]
+jugador=Jugador(ancho_ventana//2-ancho_jugador//2,alto_ventana//2-alto_jugador//2) #Creo el jugador
+enemigos=pygame.sprite.Group()
 
 reloj=pygame.time.Clock() #Modifico el tiempo de refresco de pantalla
+
+nivel=1
 
 while True: #Ciclo infinito para que no se cierre la ventana
     reloj.tick(60) #Seteo el tiempo de refresco de pantalla
@@ -22,23 +24,23 @@ while True: #Ciclo infinito para que no se cierre la ventana
 
     #Según la tecla presionada muevo el jugador
     if tecla[pygame.K_a] or tecla[pygame.K_LEFT]:
-        jugador_1.izquierda()
+        jugador.izquierda()
     if tecla[pygame.K_d] or tecla[pygame.K_RIGHT]:
-        jugador_1.derecha()
+        jugador.derecha()
     if tecla[pygame.K_s] or tecla[pygame.K_DOWN]:
-        jugador_1.abajo()
+        jugador.abajo()
     if tecla[pygame.K_w] or tecla[pygame.K_UP]:
-        jugador_1.arriba()
+        jugador.arriba()
 
     #Chequeo que el jugador no salga de los limites de la ventana
-    if jugador_1.rectángulo.x<0: 
-        jugador_1.rectángulo.x=0
-    if jugador_1.rectángulo.x>ancho_ventana-ancho_jugador:
-        jugador_1.rectángulo.x=ancho_ventana-ancho_jugador
-    if jugador_1.rectángulo.y<0:
-        jugador_1.rectángulo.y=0
-    if jugador_1.rectángulo.y>alto_ventana-alto_jugador:
-        jugador_1.rectángulo.y=alto_ventana-alto_jugador
+    if jugador.rect.x<0: 
+        jugador.rect.x=0
+    if jugador.rect.x>ancho_ventana-ancho_jugador:
+        jugador.rect.x=ancho_ventana-ancho_jugador
+    if jugador.rect.y<0:
+        jugador.rect.y=0
+    if jugador.rect.y>alto_ventana-alto_jugador:
+        jugador.rect.y=alto_ventana-alto_jugador
 
     #Si se presiona el botón cerrar de la ventana, salgo de la misma
     for evento in pygame.event.get():
@@ -49,21 +51,27 @@ while True: #Ciclo infinito para que no se cierre la ventana
     ventana.fill(color_fondo) #Coloreo la ventana
 
     if len(enemigos)==0:
-        for número in range(10):
+        for número in range(5*nivel):
             posición_x=randint(0,ancho_ventana)
             posición_y=randint(-500,-100)
 
-            enemigo=Enemigo(posición_x,posición_y)
-            enemigos.append(enemigo)
+            enemigo=Enemigo(posición_x,posición_y,nivel)
+            enemigos.add(enemigo)
 
     for enemigo in enemigos:
         enemigo.abajo()
         enemigo.dibujar(ventana)
 
-        if enemigo.rectángulo.y>alto_ventana:
+        if enemigo.rect.y>alto_ventana:
             enemigos.remove(enemigo)
 
-    jugador_1.dibujar(ventana) #El jugador se dibuja
+    if len(enemigos)==0:
+        nivel +=1
+
+    if pygame.sprite.spritecollideany(jugador,enemigos):
+        print("El jugador perdió")
+
+    jugador.dibujar(ventana) #El jugador se dibuja
     
 
     pygame.display.update() #Actualizo la pantalla
