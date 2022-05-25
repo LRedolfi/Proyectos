@@ -1,6 +1,9 @@
+from operator import le
+from random import randint
 import pygame,sys #Importo librerías
 from constantes import * #Importo las constantes
 from jugador import Jugador #Importo la clase jugador
+from enemigo import Enemigo
 
 pygame.init() # Inicio pygame
 
@@ -8,6 +11,7 @@ ventana = pygame.display.set_mode((ancho_ventana,alto_ventana)) #Creo la ventana
 pygame.display.set_caption("Ventana") #Titulo de la ventana
 
 jugador_1=Jugador(ancho_ventana//2-ancho_jugador//2,alto_ventana//2-alto_jugador//2) #Creo el jugador
+enemigos=[]
 
 reloj=pygame.time.Clock() #Modifico el tiempo de refresco de pantalla
 
@@ -36,13 +40,30 @@ while True: #Ciclo infinito para que no se cierre la ventana
     if jugador_1.rectángulo.y>alto_ventana-alto_jugador:
         jugador_1.rectángulo.y=alto_ventana-alto_jugador
 
-#Si se presiona el botón cerrar de la ventana, salgo de la misma
+    #Si se presiona el botón cerrar de la ventana, salgo de la misma
     for evento in pygame.event.get():
         if evento.type==pygame.QUIT:
             pygame.quit()
             sys.exit()
     
     ventana.fill(color_fondo) #Coloreo la ventana
+
+    if len(enemigos)==0:
+        for número in range(10):
+            posición_x=randint(0,ancho_ventana)
+            posición_y=randint(-500,-100)
+
+            enemigo=Enemigo(posición_x,posición_y)
+            enemigos.append(enemigo)
+
+    for enemigo in enemigos:
+        enemigo.abajo()
+        enemigo.dibujar(ventana)
+
+        if enemigo.rectángulo.y>alto_ventana:
+            enemigos.remove(enemigo)
+
     jugador_1.dibujar(ventana) #El jugador se dibuja
+    
 
     pygame.display.update() #Actualizo la pantalla
